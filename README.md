@@ -1,25 +1,20 @@
-# field-test
+# Sobre o projeto
 
-## Usando Docker
+Criar uma listagem de pokemons, onde será possível realizar as seguintes ações:
 
-`yarn serve`
+- Mudar o número de resultado de pokemons de um única vez
+- Paginação de resultados
+- Pesquisar por um Pokemon específico
+- Mostrar todas as informações úteis do pokemon em uma página ou modal
 
-## Project setup
+## Servindo o projeto
 
-`yarn install`
+Para executar o projeto pode ser feito de duas formas, sendo a primeiro direto pelo terminal utilizando:
 
-### Compiles and hot-reloads for development
+- `yarn install && yarn dev`
 
-`yarn dev`
+Por Docker utilizando o comando: `yarn serve`
 
-### Compiles and minifies for production
+## Referências
 
-`yarn build`
-
-### Lints and fixes files
-
-`yarn lint`
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [Poke API](https://pokeapi.co/)
