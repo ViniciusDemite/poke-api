@@ -42,6 +42,8 @@ export default {
       );
 
       this.searchPokemon = data;
+
+      //FIXME tratar quando não for digitado o nome completo do pokemon
     },
   },
 };
