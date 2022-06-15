@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="py-2 header">
     <div class="container">
       <slot></slot>
     </div>

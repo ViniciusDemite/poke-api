@@ -1,6 +1,12 @@
 <template>
-  <div class="section">
-    <div class="navigation-container">
+  <div class="py-5">
+    <div class="container">
+      <h1 class="text-center mb-5 page-title">Pokemons</h1>
+
+      <slot></slot>
+    </div>
+
+    <!-- <div class="navigation-container">
       <select class="per-page" v-model.number="perPage">
         <option v-for="v in select" :key="v">
           {{ v }}
@@ -24,35 +30,18 @@
           <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
-    </div>
+    </div> -->
 
-    <div class="pokemons">
-      <div v-for="pokemon in pokemons" :key="pokemon.name" class="card">
-        <PokemonItem
-          :name="pokemon.name"
-          :image="pokemon.sprites.other.dream_world.front_default"
-          :types="pokemon.types"
-        />
-      </div>
-    </div>
-
-    <h4 class="pokemon__count">Total: {{ total }}</h4>
+    <!-- <h4 class="pokemon__count">Total: {{ total }}</h4> -->
   </div>
 </template>
 
 <script>
-import PokemonItem from "./PokemonItem.vue";
-
 export default {
-  name: "PokemonsContainer",
-
-  components: {
-    PokemonItem,
-  },
+  name: "PokemonsSection",
 
   data() {
     return {
-      pokemons: [],
       total: 0,
       prev: false,
       next: false,
@@ -61,10 +50,6 @@ export default {
       limit: 30,
       select: [30, 60, 90, 120],
     };
-  },
-
-  mounted() {
-    this.getPokemons();
   },
 
   watch: {
@@ -76,31 +61,6 @@ export default {
   },
 
   methods: {
-    async getPokemons() {
-      const {
-        data: { results, count, previous, next },
-      } = await this.axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=${this.offset}&limit=${this.limit}`
-      );
-
-      if (this.total !== count) {
-        this.total = count;
-      }
-
-      this.prev = previous !== null;
-      this.next = next !== null;
-
-      if (this.pokemons.length > 0) {
-        this.pokemons = [];
-      }
-
-      results.forEach(async (result) => {
-        const { data } = await this.axios.get(result.url);
-
-        this.pokemons.push(data);
-      });
-    },
-
     nextPokemons() {
       this.offset = this.limit;
       this.limit += this.perPage;
@@ -119,4 +79,4 @@ export default {
 };
 </script>
 
-<style scoped src="../assets/css/pokemons.css" />
+<style scoped src="../../assets/css/pokemons-section.css" />
