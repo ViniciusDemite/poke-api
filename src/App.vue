@@ -4,6 +4,15 @@
   </HeaderSection>
 
   <PokemonsSection :total="total">
+    <div class="d-flex align-content-center justify-space-between mb-4">
+      <PokemonPrevNext
+        v-model:prev="prev"
+        v-model:next="next"
+        @nextPage="nextPagePokemons"
+        @prevPage="prevPagePokemons"
+      />
+    </div>
+
     <div class="row gx-4 gy-5">
       <PokemonCard
         v-for="pokemon in pokemonsSlice"
@@ -20,6 +29,7 @@ import HeaderSection from "./components/HeaderSection.vue";
 import SearchBar from "./components/SearchBar.vue";
 import PokemonsSection from "./components/Pokemons/PokemonsSection.vue";
 import PokemonCard from "./components/Pokemons/PokemonCard.vue";
+import PokemonPrevNext from "./components/Pokemons/PokemonPrevNext.vue";
 
 // TODO fazer componente de modal para mostrar resultado de pesquisa e informações detalhadas do pokemon
 
@@ -31,6 +41,7 @@ export default {
     SearchBar,
     PokemonsSection,
     PokemonCard,
+    PokemonPrevNext,
   },
 
   data() {
@@ -41,6 +52,8 @@ export default {
       total: 0,
       offset: 0,
       limit: 30,
+      prev: false,
+      next: true,
       search: "",
       searchedPokemon: {},
     };
@@ -93,6 +106,10 @@ export default {
 
       //FIXME tratar quando não for digitado o nome completo do pokemon
     },
+
+    nextPagePokemons() {},
+
+    prevPagePokemons() {},
 
     showPokemon(pokemon) {
       console.log(pokemon.name);
