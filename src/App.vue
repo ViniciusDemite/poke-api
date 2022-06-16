@@ -3,7 +3,7 @@
     <SearchBar v-model:search="search" @searchPokemon="getPokemon" />
   </HeaderSection>
 
-  <PokemonsSection>
+  <PokemonsSection :total="total">
     <div class="row gx-4 gy-5">
       <PokemonCard
         v-for="pokemon in pokemonsSlice"

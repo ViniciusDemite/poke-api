@@ -4,6 +4,8 @@
       <h1 class="text-center mb-5 page-title">Pokemons</h1>
 
       <slot></slot>
+
+      <h4 class="text-center mt-5 total">Total: {{ total }}</h4>
     </div>
 
     <!-- <div class="navigation-container">
@@ -31,8 +33,6 @@
         </button>
       </div>
     </div> -->
-
-    <!-- <h4 class="pokemon__count">Total: {{ total }}</h4> -->
   </div>
 </template>
 
@@ -42,7 +42,6 @@ export default {
 
   data() {
     return {
-      total: 0,
       prev: false,
       next: false,
       perPage: 30,
@@ -50,6 +49,13 @@ export default {
       limit: 30,
       select: [30, 60, 90, 120],
     };
+  },
+
+  props: {
+    total: {
+      type: Number,
+      required: true,
+    },
   },
 
   watch: {
