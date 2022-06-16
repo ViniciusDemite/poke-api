@@ -9,6 +9,7 @@
         v-for="pokemon in pokemonsSlice"
         :key="pokemon.id"
         :pokemon="pokemon"
+        @infoPokemon="showPokemon"
       />
     </div>
   </PokemonsSection>
@@ -36,6 +37,7 @@ export default {
     return {
       allPokemons: [],
       pokemonsSlice: [],
+      pokemonsNamesList: [],
       total: 0,
       offset: 0,
       limit: 30,
@@ -50,12 +52,11 @@ export default {
 
   watch: {
     search: function () {
-      /* const regex = new RegExp(this.search + ".+$", "i");
-      const pokemonsList = this.allPokemons.filter(
-        (pokemon) => pokemon.name.search(regex) !== 1
+      const pokemonsList = this.allPokemons.filter((pokemon) =>
+        pokemon.name.includes(this.search.toLocaleLowerCase())
       );
 
-      console.log(pokemonsList); */
+      this.pokemonsNamesList = pokemonsList;
     },
   },
 
@@ -75,8 +76,8 @@ export default {
     },
 
     async getPokemonsSlice() {
-      for (let i = 0; i < this.limit; i++) {
-        const pokemon = this.allPokemons[i];
+      for (this.offset; this.offset < this.limit; this.offset++) {
+        const pokemon = this.allPokemons[this.offset];
         const { data } = await this.axios.get(pokemon.url);
 
         this.pokemonsSlice.push(data);
@@ -91,6 +92,10 @@ export default {
       this.searchPokemon = data;
 
       //FIXME tratar quando não for digitado o nome completo do pokemon
+    },
+
+    showPokemon(pokemon) {
+      console.log(pokemon.name);
     },
   },
 };

@@ -26,6 +26,14 @@
           {{ t.type.name }}
         </span>
       </div>
+
+      <a
+        href="#"
+        class="d-block text-center mt-4 link"
+        @click.prevent="$emit('infoPokemon', pokemon)"
+      >
+        Ver mais
+      </a>
     </article>
   </div>
 </template>
@@ -39,6 +47,8 @@ export default {
       colors: {},
     };
   },
+
+  emits: ["infoPokemon"],
 
   props: {
     pokemon: {

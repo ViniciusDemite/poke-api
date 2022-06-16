@@ -25,3 +25,8 @@
 .type:not(:last-of-type) {
 	margin-right: 1rem;
 }
+
+.link {
+	text-decoration: none;
+	color: #ef5350;
+}
