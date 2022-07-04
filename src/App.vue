@@ -92,21 +92,25 @@ export default {
     },
 
     async getPokemonsSlice() {
+      const promisedData = await this.getPokemonsSliceData();
+
+      this.pokemonsSlice = promisedData.map((pokemon) => {
+        return pokemon.data;
+      });
+    },
+
+    getPokemonsSliceData() {
+      let promisedEvents = [];
       this.pokemonsSlice = [];
 
       if (this.limit > this.total) this.limit = this.total;
 
-      console.log(`Offset: ${this.offset}`, `Limit: ${this.limit}`);
-
-      // FIXME Retornar Promise.all
       for (let offset = this.offset; offset < this.limit; offset++) {
         const pokemon = this.allPokemons[offset];
-        const { data } = await this.axios.get(pokemon.url);
-
-        this.pokemonsSlice.push(data);
+        promisedEvents.push(this.axios.get(pokemon.url));
       }
 
-      console.log("Números de pokemons: ", this.pokemonsSlice.length);
+      return Promise.all(promisedEvents);
     },
 
     async getPokemon() {
@@ -119,25 +123,25 @@ export default {
       //FIXME tratar quando não for digitado o nome completo do pokemon
     },
 
-    async nextPagePokemons() {
+    nextPagePokemons() {
       if (this.limit >= this.total) return;
 
       this.offset = this.limit + 1;
       this.limit += this.perPage + 1;
 
-      await this.getPokemonsSlice();
+      this.getPokemonsSlice();
 
       this.prev = this.hasPrevElements();
       this.next = this.hasNextElements();
     },
 
-    async prevPagePokemons() {
+    prevPagePokemons() {
       if (this.offset === 0) return;
 
       this.limit -= this.perPage;
       this.offset -= this.limit;
 
-      await this.getPokemonsSlice();
+      this.getPokemonsSlice();
 
       this.prev = this.hasPrevElements();
       this.next = this.hasNextElements();
