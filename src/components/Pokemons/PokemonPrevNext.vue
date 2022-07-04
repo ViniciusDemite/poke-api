@@ -3,7 +3,7 @@
     <button
       type="button"
       class="btn btn-primary button prev-button"
-      v-if="prev"
+      :disabled="!prev"
       @click="$emit('prevPage')"
     >
       <i class="fa-solid fa-chevron-left"></i>

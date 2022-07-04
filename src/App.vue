@@ -33,6 +33,8 @@ import PokemonPrevNext from "./components/Pokemons/PokemonPrevNext.vue";
 
 // TODO fazer componente de modal para mostrar resultado de pesquisa e informações detalhadas do pokemon
 
+const defaultPerPage = 30;
+
 export default {
   name: "App",
 
@@ -50,8 +52,9 @@ export default {
       pokemonsSlice: [],
       pokemonsNamesList: [],
       total: 0,
+      perPage: defaultPerPage,
       offset: 0,
-      limit: 30,
+      limit: defaultPerPage,
       prev: false,
       next: true,
       search: "",
@@ -89,12 +92,21 @@ export default {
     },
 
     async getPokemonsSlice() {
-      for (this.offset; this.offset < this.limit; this.offset++) {
-        const pokemon = this.allPokemons[this.offset];
+      this.pokemonsSlice = [];
+
+      if (this.limit > this.total) this.limit = this.total;
+
+      console.log(`Offset: ${this.offset}`, `Limit: ${this.limit}`);
+
+      // FIXME Retornar Promise.all
+      for (let offset = this.offset; offset < this.limit; offset++) {
+        const pokemon = this.allPokemons[offset];
         const { data } = await this.axios.get(pokemon.url);
 
         this.pokemonsSlice.push(data);
       }
+
+      console.log("Números de pokemons: ", this.pokemonsSlice.length);
     },
 
     async getPokemon() {
@@ -107,9 +119,37 @@ export default {
       //FIXME tratar quando não for digitado o nome completo do pokemon
     },
 
-    nextPagePokemons() {},
+    async nextPagePokemons() {
+      if (this.limit >= this.total) return;
 
-    prevPagePokemons() {},
+      this.offset = this.limit + 1;
+      this.limit += this.perPage + 1;
+
+      await this.getPokemonsSlice();
+
+      this.prev = this.hasPrevElements();
+      this.next = this.hasNextElements();
+    },
+
+    async prevPagePokemons() {
+      if (this.offset === 0) return;
+
+      this.limit -= this.perPage;
+      this.offset -= this.limit;
+
+      await this.getPokemonsSlice();
+
+      this.prev = this.hasPrevElements();
+      this.next = this.hasNextElements();
+    },
+
+    hasPrevElements() {
+      return this.offset !== 0;
+    },
+
+    hasNextElements() {
+      return this.limit < this.total;
+    },
 
     showPokemon(pokemon) {
       console.log(pokemon.name);
