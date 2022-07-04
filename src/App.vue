@@ -74,6 +74,12 @@ export default {
 
       this.pokemonsNamesList = pokemonsList;
     },
+    pokemonsSlice: function () {
+      if (this.pokemonsSlice.length === 0) return;
+
+      this.hasPrevElements();
+      this.hasNextElements();
+    },
   },
 
   methods: {
@@ -92,6 +98,7 @@ export default {
     },
 
     async getPokemonsSlice() {
+      this.pokemonsSlice = [];
       const promisedData = await this.getPokemonsSliceData();
 
       this.pokemonsSlice = promisedData.map((pokemon) => {
@@ -101,7 +108,6 @@ export default {
 
     getPokemonsSliceData() {
       let promisedEvents = [];
-      this.pokemonsSlice = [];
 
       if (this.limit > this.total) this.limit = this.total;
 
@@ -129,30 +135,29 @@ export default {
       this.offset = this.limit + 1;
       this.limit += this.perPage + 1;
 
-      this.getPokemonsSlice();
+      console.log(`Offset: ${this.offset}`);
 
-      this.prev = this.hasPrevElements();
-      this.next = this.hasNextElements();
+      this.getPokemonsSlice();
     },
 
     prevPagePokemons() {
       if (this.offset === 0) return;
 
       this.limit -= this.perPage;
+      console.log(`Limit: ${this.limit}`);
       this.offset -= this.limit;
 
-      this.getPokemonsSlice();
+      console.log(`Offset: ${this.offset}`);
 
-      this.prev = this.hasPrevElements();
-      this.next = this.hasNextElements();
+      this.getPokemonsSlice();
     },
 
     hasPrevElements() {
-      return this.offset !== 0;
+      this.prev = this.offset !== 0;
     },
 
     hasNextElements() {
-      return this.limit < this.total;
+      this.next = this.limit < this.total;
     },
 
     showPokemon(pokemon) {
