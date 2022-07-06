@@ -4,7 +4,7 @@
   </HeaderSection>
 
   <PokemonsSection :total="total">
-    <div class="d-flex align-content-center justify-space-between mb-4">
+    <div class="d-flex align-content-center justify-content-end mb-4">
       <PokemonPrevNext
         v-model:prev="prev"
         v-model:next="next"
