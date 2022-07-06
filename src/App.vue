@@ -104,15 +104,13 @@ export default {
       this.pokemonsSlice = promisedData.map((pokemon) => {
         return pokemon.data;
       });
-
-      console.log(`Resultados: ${this.pokemonsSlice.length}`);
     },
 
     getPokemonsSliceData() {
       let promisedEvents = [];
 
       for (let offset = this.offset; offset < this.limit; offset++) {
-        if (offset > this.allPokemons.length) break;
+        if (offset > this.allPokemons.length - 1) break;
 
         const pokemon = this.allPokemons[offset];
         promisedEvents.push(this.axios.get(pokemon.url));
