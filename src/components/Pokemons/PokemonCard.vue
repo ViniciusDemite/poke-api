@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-4 col-md-2 col-12">
+  <div class="col-lg-4 col-md-6 col-12">
     <article class="py-3 px-2 pokemon-card">
       <figure class="m-0">
         <img
