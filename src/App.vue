@@ -111,9 +111,9 @@ export default {
     getPokemonsSliceData() {
       let promisedEvents = [];
 
-      if (this.limit > this.total) this.limit = this.total;
-
       for (let offset = this.offset; offset < this.limit; offset++) {
+        if (offset > this.allPokemons.length) break;
+
         const pokemon = this.allPokemons[offset];
         promisedEvents.push(this.axios.get(pokemon.url));
       }
@@ -132,24 +132,22 @@ export default {
     },
 
     nextPagePokemons() {
-      if (this.limit >= this.total) return;
+      if (this.limit === this.perPage) this.limit += 1;
 
-      this.offset = this.limit > 30 ? this.limit : this.limit + 1;
+      this.offset = this.limit;
       this.limit += this.perPage;
-
-      console.log(`Offset: ${this.offset}`);
 
       this.getPokemonsSlice();
     },
 
     prevPagePokemons() {
+      if (this.offset === this.perPage + 1) {
+        this.offset -= 1;
+        this.limit -= 1;
+      }
+
       this.limit -= this.perPage;
-      console.log(`Limit: ${this.limit}`);
-      this.offset -= this.limit;
-
-      if (this.offset <= 0) return;
-
-      console.log(`Offset: ${this.offset}`);
+      this.offset -= this.perPage;
 
       this.getPokemonsSlice();
     },
