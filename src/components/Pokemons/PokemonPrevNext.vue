@@ -10,8 +10,8 @@
     </button>
     <button
       type="button"
-      class="btn btn-primary next-button"
-      v-if="next"
+      class="btn btn-primary next-button ms-2"
+      :disabled="!next"
       @click="$emit('nextPage')"
     >
       <i class="fa-solid fa-chevron-right"></i>

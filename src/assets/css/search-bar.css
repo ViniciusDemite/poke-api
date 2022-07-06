@@ -12,11 +12,8 @@
 
 .search-button {
 	height: 40px;
-	background-color: #fec91b;
-	border-color: #fec91b;
 }
 
-.search:focus,
-.search-button:focus {
+.search:focus {
 	box-shadow: 0 0 0 0.25rem rgb(255, 202, 28, 0.5);
 }

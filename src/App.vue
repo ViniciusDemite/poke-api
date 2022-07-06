@@ -87,7 +87,7 @@ export default {
       const {
         data: { results, count },
       } = await this.axios.get(
-        "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
+        "https://pokeapi.co/api/v2/pokemon?offset=0&limit=100000"
       );
 
       this.total = count;
@@ -104,6 +104,8 @@ export default {
       this.pokemonsSlice = promisedData.map((pokemon) => {
         return pokemon.data;
       });
+
+      console.log(`Resultados: ${this.pokemonsSlice.length}`);
     },
 
     getPokemonsSliceData() {
@@ -132,8 +134,8 @@ export default {
     nextPagePokemons() {
       if (this.limit >= this.total) return;
 
-      this.offset = this.limit + 1;
-      this.limit += this.perPage + 1;
+      this.offset = this.limit > 30 ? this.limit : this.limit + 1;
+      this.limit += this.perPage;
 
       console.log(`Offset: ${this.offset}`);
 
@@ -141,11 +143,11 @@ export default {
     },
 
     prevPagePokemons() {
-      if (this.offset === 0) return;
-
       this.limit -= this.perPage;
       console.log(`Limit: ${this.limit}`);
       this.offset -= this.limit;
+
+      if (this.offset <= 0) return;
 
       console.log(`Offset: ${this.offset}`);
 

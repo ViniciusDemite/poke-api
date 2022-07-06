@@ -1,1 +1,17 @@
+.btn-primary,
+.btn-primary:active {
+	background-color: #fec91b;
+	border-color: #fec91b;
+}
 
+.btn-primary.disabled,
+.btn-primary:disabled,
+.btn-primary:hover,
+.btn-primary:focus {
+	background-color: #ffd750;
+	border-color: #ffd750;
+}
+
+.btn-primary:focus {
+	box-shadow: 0 0 0 0.25rem rgb(255, 202, 28, 0.5);
+}
